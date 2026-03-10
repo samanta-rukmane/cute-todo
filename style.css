@@ -66,13 +66,41 @@ li {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: 0.3s;    /* hover animation */
+    transition: all 0.3s ease;    /* hover animation */
     outline: none;    /* remove focus */
+    opacity: 1;
+}
+
+li.removed {
+    opacity: 0;
+    transform: translateX(20px);
 }
 
 li:hover {
     transform: scale(1.03);    /* small zoom on hover */
     cursor: pointer;
+    background: #ffe0f2;
+}
+
+li button {
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ff7eb9;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    color: white;
+    padding: 0;
+    transition: 0.2s;
+}
+
+li button:hover {
+    background: #ff4da6;
+    color: white;
 }
 
 

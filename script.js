@@ -11,23 +11,61 @@ input.addEventListener("keypress", (e) => {
 });
 
 
+let tasks = [];    // array for storing tasks
+
+if (localStorage.getItem("tasks")) {
+    tasks = JSON.parse(localStorage.getItem("tasks"));
+    tasks.forEach(t => {
+        createTaskElement(t.text, t.completed);
+    });
+}
+
+
 // Function to add a new task
 function addTask() {
     const text = input.value.trim();    // get input value
     if (text === "") return;    // ignore empty tasks
 
-    // Create new list item
-    const li = document.createElement("li");
-    li.textContent = text;
+    tasks.push({text: text, completed: false});    // add task to array
+    localStorage.setItem("tasks", JSON.stringify(tasks));    // save the array in localStorage
 
-    // Toggle completed on click
-    li.addEventListener("click", () => {
-        li.classList.toggle("completed");
+    createTaskElement(text, false);
+
+    input.value = "";    // clear input
+}
+
+
+function createTaskElement(text, completed) {
+    const li = document.createElement("li");
+
+    const span = document.createElement("span");
+    span.textContent = text;
+    if (completed) span.classList.add("completed");
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "×";
+    deleteBtn.style.marginLeft = "10px";
+
+    li.addEventListener("click", (e) => {
+        if (e.target !== deleteBtn) {
+            span.classList.toggle("completed");
+
+            const taskObj = tasks.find(t => t.text === text);
+            if (taskObj) taskObj.completed = span.classList.contains("completed");
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+        }
     });
 
-    // Add to task list
-    list.appendChild(li);
+    deleteBtn.addEventListener("click", () => {
+        li.classList.add("removed");
+        setTimeout(() => {
+            list.removeChild(li);
+            tasks = tasks.filter(t => t.text !== text);
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+        }, 300);
+    });
 
-    // Clear input
-    input.value = "";
+    li.appendChild(span);
+    li.appendChild(deleteBtn);
+    list.appendChild(li);
 }
