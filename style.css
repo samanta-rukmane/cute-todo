@@ -1,0 +1,82 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #ffeef5;    /* light pink background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    width: 320px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);    /* subtitle shadow */
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+    color: #ff4da6;    /* cute pink */
+    font-size: 1.8rem;
+}
+
+.todo-input {
+    display: flex;
+    gap: 10px;    /* space between input and button */
+    margin-bottom: 20px;
+}
+
+input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    outline: none;
+}
+
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 10px;
+    background: #ff7eb9;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;    /* smooth hover */
+}
+
+button:hover {
+    background: #ff4da6;
+}
+
+
+#taskList {
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    list-style: none;    /* remove bullets */
+    padding: 10px 15px;
+    background: #f7f7f7;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.3s;    /* hover animation */
+    outline: none;    /* remove focus */
+}
+
+li:hover {
+    transform: scale(1.03);    /* small zoom on hover */
+    cursor: pointer;
+}
+
+
+.completed {
+    text-decoration: line-through;    /* mark completed tasks */
+    opacity: 0.6;
+}
