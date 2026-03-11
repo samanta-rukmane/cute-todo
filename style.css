@@ -21,6 +21,7 @@ h1 {
     margin-bottom: 20px;
     color: #ff4da6;    /* cute pink */
     font-size: 1.8rem;
+    cursor: default;
 }
 
 .todo-input {
@@ -103,8 +104,64 @@ li button:hover {
     color: white;
 }
 
+li span {
+    transition: all 0.2s;
+    cursor: text;
+}
+
+li.removed {
+    opacity: 0;
+    transform: translateX(20px);
+}
+
 
 .completed {
     text-decoration: line-through;    /* mark completed tasks */
     opacity: 0.6;
+    transition: all 0.3s ease;
+}
+
+
+.filters {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filters button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 10px;
+    background: #ff7eb9;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.filters button:hover, 
+.filters button.active {
+    background: #ff4da6;
+}
+
+.task-counter {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #ff4da6;
+    font-weight: bold;
+}
+
+.hidden-by-filter {
+    opacity: 0;
+    transform: translateY(-5px);
+    transition: all 0.3s ease;
+}
+
+.edit-input {
+    flex: 1;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    outline: none;
+    font-size: 1rem;
 }
