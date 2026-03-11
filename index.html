@@ -16,9 +16,17 @@
             <button id="addBtn"> Add </button>    <!-- Button to add task -->
         </div>
 
+        <div class="filters">
+            <button data-filter="all" class="active"> All </button>
+            <button data-filter="active"> Active </button>
+            <button data-filter="completed"> Completed </button>
+        </div>
+
+        <div class="task-counter"> 0 tasks left </div>
+
         <ul id="taskList"></ul>    <!-- Unordered list for tasks -->
     </div>
 
-    <script src="script.js"></script>    <!-- Link to JavaScript -->
+    <script type="module" src="js/index.js"></script>    <!-- Link to JavaScript -->
 </body>
 </html>
