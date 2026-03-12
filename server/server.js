@@ -2,11 +2,12 @@ const express = require("express");
 const fs = require("fs");
 const path = require("path");
 const cors = require("cors");
-const { json } = require("body-parser");
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "../public")));    // we give the front end
 
 const DATA_PATH = path.join(__dirname, "tasks.json");
 
@@ -48,4 +49,9 @@ app.delete("/tasks/:id", (req, res) => {
     res.sendStatus(204);
 });
 
-app.listen(3000, () => console.log("Server running on http://localhost:3000"));
+
+const PORT = 3000;
+
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+});
