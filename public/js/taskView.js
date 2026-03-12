@@ -1,12 +1,54 @@
-import { tasks, currentFilter } from "./state.js";
+import { tasks, currentFilter, saveTaskOrder } from "./state.js";
 
 const list = document.getElementById("taskList");
 const counter = document.querySelector(".task-counter");
 
+
 // creates li for the task
 export function createTaskElement(task, startEditingTask) {
     const li = document.createElement("li");
+    li.draggable = true;
     li.dataset.id = task.id;
+
+    li.addEventListener("dragstart", (e) => {
+        e.dataTransfer.setData("text/plain", task.id);
+    });
+
+    li.addEventListener("dragover", (e) => {
+        e.preventDefault();
+    });
+
+
+    li.addEventListener("dragenter", () => {
+        li.classList.add("drag-over");    // add highlight class
+    });
+
+    li.addEventListener("dragleave", () => {
+        li.classList.remove("drag-over");    // turn off the backlight
+    });
+
+
+    li.addEventListener("drop", (e) => {
+        e.preventDefault();
+        li.classList.remove("drag-over");    // turn off the backlight
+
+        const draggedId = Number(e.dataTransfer.getData("text/plain"));
+        const targetId = Number(li.dataset.id);
+
+        const draggedTask = tasks.find(t => t.id === draggedId);
+        const targetTask = tasks.find(t => t.id === targetId);
+
+        if (!draggedTask || !targetTask) return;
+
+        const temp = draggedTask.order;
+        draggedTask.order = targetTask.order;
+        targetTask.order = temp;
+
+        tasks.sort((a, b) => a.order - b.order);
+        tasks.forEach((t, index) => t.order = index);    // update order
+        renderTasks(startEditingTask);
+        saveTaskOrder();
+    });
 
     const span = document.createElement("span");
     span.textContent = task.text;
@@ -28,6 +70,7 @@ export function createTaskElement(task, startEditingTask) {
     return li;
 }
 
+
 // task render with filter applied
 export function renderTasks(startEditingTask) {
     list.innerHTML = "";
@@ -39,6 +82,7 @@ export function renderTasks(startEditingTask) {
     filteredTasks.forEach(task => createTaskElement(task, startEditingTask));
     updateCounter();
 }
+
 
 // counter update
 export function updateCounter() {

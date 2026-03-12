@@ -165,3 +165,10 @@ li.removed {
     outline: none;
     font-size: 1rem;
 }
+
+
+.drag-over {
+    outline: 2px dashed #3498db;
+    background-color: #ecf6fd;
+    box-sizing: border-box;
+}

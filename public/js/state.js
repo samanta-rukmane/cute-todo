@@ -3,17 +3,22 @@ export let currentFilter = "all";
 
 const API_URL = "http://localhost:3000/tasks";
 
+
 // ---------------------------
 // load all tasks from server
 export async function loadTasks() {
     try {
         const res = await fetch(API_URL);
         const data = await res.json();
+
+        data.sort((a, b) => a.order - b.order);    // sort tasks by order
+
         tasks.splice(0, tasks.length, ...data); // replace local array
     } catch (err) {
         console.error("Failed to load tasks:", err);
     }
 }
+
 
 // ---------------------------
 // add a new task to server
@@ -32,6 +37,7 @@ export async function addTaskToServer(text) {
     }
 }
 
+
 // ---------------------------
 // update task on server
 export async function updateTaskOnServer(task) {
@@ -46,6 +52,7 @@ export async function updateTaskOnServer(task) {
     }
 }
 
+
 // ---------------------------
 // delete task from server
 export async function deleteTaskFromServer(id) {
@@ -58,8 +65,30 @@ export async function deleteTaskFromServer(id) {
     }
 }
 
+
 // ---------------------------
 // change current filter
 export function setFilter(newFilter) {
     currentFilter = newFilter;
+}
+
+
+// ---------------------------
+// save order of tasks to server
+export async function saveTaskOrder() {
+    try {
+        for (const task of tasks) {
+            await fetch(`${API_URL}/${task.id}`, {
+                method: "PUT",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    text: task.text,
+                    completed: task.completed,
+                    order: task.order
+                })
+            });
+        }
+    } catch (err) {
+        console.error("Failed to save order:", err);
+    }
 }

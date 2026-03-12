@@ -20,16 +20,23 @@ function saveTasks(tasks) {
     fs.writeFileSync(DATA_PATH, JSON.stringify(tasks, null, 2));
 }
 
+
 // API
 app.get("/tasks", (req, res) => res.json(readTasks()));
 
 app.post("/tasks", (req, res) => {
     const tasks = readTasks();
-    const task = { id: Date.now(), text: req.body.text, completed: false };
+    const task = { 
+        id: Date.now(), 
+        text: req.body.text, 
+        completed: false,
+        order: tasks.length 
+    };
     tasks.push(task);
     saveTasks(tasks);
     res.json(task);
 });
+
 
 app.put("/tasks/:id", (req, res) => {
     const tasks = readTasks();
@@ -37,10 +44,13 @@ app.put("/tasks/:id", (req, res) => {
     if (task) {
         task.text = req.body.text ?? task.text;
         task.completed = req.body.completed ?? task.completed;
+        task.order = req.body.order ?? task.order;
+
         saveTasks(tasks);
         res.json(task);
     } else res.status(404).send("Task not found");
 });
+
 
 app.delete("/tasks/:id", (req, res) => {
     let tasks = readTasks();
