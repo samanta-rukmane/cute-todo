@@ -1,5 +1,5 @@
 export let tasks = [];
-export let currentFilter = "all";
+export let currentFilter = localStorage.getItem("todoFilter") || "all";
 
 const API_URL = "http://localhost:3000/tasks";
 
@@ -70,6 +70,7 @@ export async function deleteTaskFromServer(id) {
 // change current filter
 export function setFilter(newFilter) {
     currentFilter = newFilter;
+    localStorage.setItem("todoFilter", newFilter);    // save the selected filter in the browser
 }
 
 

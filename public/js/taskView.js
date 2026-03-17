@@ -1,12 +1,13 @@
-import { tasks, currentFilter, saveTaskOrder } from "./state.js";
+import { tasks, currentFilter, saveTaskOrder, setFilter } from "./state.js";
 
 const list = document.getElementById("taskList");
 const counter = document.querySelector(".task-counter");
-
+const filterButtons = document.querySelectorAll(".filters button");
 
 // creates li for the task
 export function createTaskElement(task, startEditingTask) {
     const li = document.createElement("li");
+    li.classList.add("task");
     li.draggable = true;
     li.dataset.id = task.id;
 
@@ -81,6 +82,7 @@ export function renderTasks(startEditingTask) {
 
     filteredTasks.forEach(task => createTaskElement(task, startEditingTask));
     updateCounter();
+    updateFilterUI();
 }
 
 
@@ -89,3 +91,24 @@ export function updateCounter() {
     const activeCount = tasks.filter(t => !t.completed).length;
     counter.textContent = `${activeCount} task${activeCount !== 1 ? "s" : ""} left`;
 }
+
+
+function updateFilterUI() {
+    filterButtons.forEach(btn => {
+        btn.classList.remove("active");
+
+        if (btn.dataset.filter === currentFilter) {
+            btn.classList.add("active");
+        }
+    });
+}
+
+filterButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+        const filter = btn.dataset.filter;
+
+        setFilter(filter);
+        updateFilterUI();
+        renderTasks();
+    })
+})

@@ -114,6 +114,24 @@ li.removed {
     transform: translateX(20px);
 }
 
+li.task {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+li.task.hidden {
+    opacity: 0;
+    height: 0;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+li.task:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
 
 .completed {
     text-decoration: line-through;    /* mark completed tasks */
@@ -136,13 +154,34 @@ li.removed {
     background: #ff7eb9;
     color: white;
     cursor: pointer;
-    transition: 0.2s;
+    transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
-.filters button:hover, 
-.filters button.active {
-    background: #ff4da6;
+.filters button:hover {
+    background: linear-gradient(135deg, #ff7eb9, #ff4da6);
+    color: white;
+    box-shadow: 0 4px 10px rgba(255, 77, 166, 0.4);
 }
+
+.filters button.active {
+    background-color: #ff4da6;
+    color: white;
+    box-shadow: 0 3px 8px rgba(255,77,166,0.4);
+    transform: none;
+}
+
+.filter button:not(.active):hover {
+    background: linear-gradient(135deg, #ff7eb9, #ff4da6);
+    box-shadow: 0 4px 10px rgba(255, 77, 166, 0.4);
+    transform: scale(1.05);
+}
+
+.filter-btn.active {
+    background-color: #ffb6c1;
+    color: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
 
 .task-counter {
     text-align: center;
@@ -171,4 +210,5 @@ li.removed {
     outline: 2px dashed #3498db;
     background-color: #ecf6fd;
     box-sizing: border-box;
+    transform: translateY(5px);
 }
