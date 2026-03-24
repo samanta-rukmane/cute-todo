@@ -83,6 +83,7 @@ export function renderTasks(startEditingTask) {
     filteredTasks.forEach(task => createTaskElement(task, startEditingTask));
     updateCounter();
     updateFilterUI();
+    updateClearButton();
 }
 
 
@@ -90,6 +91,19 @@ export function renderTasks(startEditingTask) {
 export function updateCounter() {
     const activeCount = tasks.filter(t => !t.completed).length;
     counter.textContent = `${activeCount} task${activeCount !== 1 ? "s" : ""} left`;
+}
+
+
+export function updateClearButton() {
+    const clearBtn = document.getElementById("clearCompleted");
+    const hasCompleted = tasks.some(t => t.completed);
+
+    // the button is only visible if ‘completed’ is set and the filter is not active
+    if (hasCompleted && (currentFilter === "all" || currentFilter === "completed")) {
+        clearBtn.classList.add("visible");
+    } else {
+        clearBtn.classList.remove("visible");
+    }
 }
 
 
@@ -102,13 +116,3 @@ function updateFilterUI() {
         }
     });
 }
-
-filterButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-        const filter = btn.dataset.filter;
-
-        setFilter(filter);
-        updateFilterUI();
-        renderTasks();
-    })
-})

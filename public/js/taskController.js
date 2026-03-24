@@ -1,10 +1,11 @@
 import { tasks, currentFilter, setFilter, addTaskToServer, updateTaskOnServer, deleteTaskFromServer } from "./state.js";
-import { renderTasks } from "./taskView.js";
+import { renderTasks, updateClearButton } from "./taskView.js";
 
 const input = document.getElementById("taskInput");
 const addBtn = document.getElementById("addBtn");
 const filterButtons = document.querySelectorAll(".filters button");
 const list = document.getElementById("taskList");
+const clearBtn = document.getElementById("clearCompleted");
 
 export function setupEventListeners() {
     addBtn.addEventListener("click", addTask);
@@ -13,8 +14,6 @@ export function setupEventListeners() {
     filterButtons.forEach(btn => {
         btn.addEventListener("click", () => {
             setFilter(btn.dataset.filter);
-            filterButtons.forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
             renderTasks(startEditingTask);
         });
     });
@@ -78,3 +77,18 @@ export async function handleListClick(e) {
         }
     }
 }
+
+
+clearBtn.addEventListener("click", async () => {
+    const completedTasks = tasks.filter(t => t.completed);
+
+    for (const task of completedTasks) {
+        if (deleteTaskFromServer) {
+            await deleteTaskFromServer(task.id);
+        } else {
+            tasks.splice(tasks.indexOf(task), 1);
+        }
+    }
+
+    renderTasks(startEditingTask); // we are updating the list and the button
+});

@@ -39,17 +39,19 @@ input {
 }
 
 button {
-    padding: 10px 15px;
+    padding: 8px 14px;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
     background: #ff7eb9;
     color: white;
+    font-size: 0.9rem;
     cursor: pointer;
-    transition: 0.2s;    /* smooth hover */
+    transition: all 0.2s ease;    /* smooth hover */
 }
 
 button:hover {
     background: #ff4da6;
+    transform: scale(1.05);
 }
 
 
@@ -84,24 +86,18 @@ li:hover {
 }
 
 li button {
-    width: 25px;
-    height: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #ff7eb9;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    font-size: 1rem;
-    color: white;
     padding: 0;
-    transition: 0.2s;
+    font-size: 1rem;
+    background-color: #ff7eb9;
+    transition: all 0.2s ease;
 }
 
 li button:hover {
-    background: #ff4da6;
-    color: white;
+    background-color: #ff4da6;
+    transform: scale(1.1);
 }
 
 li span {
@@ -148,13 +144,13 @@ li.task:hover {
 }
 
 .filters button {
-    padding: 5px 10px;
-    border: none;
-    border-radius: 10px;
-    background: #ff7eb9;
-    color: white;
-    cursor: pointer;
-    transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    background-color: #ff7eb9;
+    font-size: 0.85rem;
+    padding: 6px 12px;
+}
+
+.filters button.active {
+    background-color: #ff4da6;
 }
 
 .filters button:hover {
@@ -163,23 +159,14 @@ li.task:hover {
     box-shadow: 0 4px 10px rgba(255, 77, 166, 0.4);
 }
 
-.filters button.active {
-    background-color: #ff4da6;
-    color: white;
-    box-shadow: 0 3px 8px rgba(255,77,166,0.4);
-    transform: none;
-}
-
-.filter button:not(.active):hover {
+.filters button:not(.active):hover {
     background: linear-gradient(135deg, #ff7eb9, #ff4da6);
     box-shadow: 0 4px 10px rgba(255, 77, 166, 0.4);
     transform: scale(1.05);
 }
 
-.filter-btn.active {
-    background-color: #ffb6c1;
-    color: white;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+.filters button.active:hover {
+    background-color: #ff4da6;
 }
 
 
@@ -211,4 +198,34 @@ li.task:hover {
     background-color: #ecf6fd;
     box-sizing: border-box;
     transform: translateY(5px);
+}
+
+
+#addBtn {
+    border-radius: 12px;
+    background-color: #ff7eb9;
+}
+
+#addBtn:hover {
+    background-color: #ff4da6;
+    transform: scale(1.05);
+}
+
+
+#clearCompleted {
+    background: transparent;
+    color: #ff4da6;
+    font-size: 0.85rem;
+    border: 1px solid #ff7eb9;
+    padding: 5px 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    opacity: 0;    /* initially hidden */
+    pointer-events: none;    /* not clickable whilst hidden */
+}
+
+#clearCompleted.visible {
+    opacity: 1;
+    pointer-events: auto;
 }
